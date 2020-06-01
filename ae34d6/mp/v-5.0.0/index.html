@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">  
+        <meta http-equiv="Expires" content="0">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-control" content="no-cache">
+        <meta http-equiv="Cache" content="no-cache">
+        <title>斗鱼工具---QQ群:423883680</title>
+
+        <link href="bootstrap.min.css" rel="stylesheet">
+        <script src="jquery-3.1.0.min.js"></script>
+        <script src="bootstrap.min.js"></script>
+        <script src="in.js"></script>
+    
+        <!-- base -->
+        <style type="text/css">
+            body {
+                margin: 0;
+                font: 18px Microsoft YaHei;
+            }
+            html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, address, big, cite, code, del, em, font, img, ins, kbd, q, s, samp, small,
+            strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, 
+            tfoot, thead, tr, th, td ,textarea,input { margin:0; padding:0;  }
+            address,cite,dfn,em,var, i {font-style:normal;}
+            body {font-size: 16px; line-height: 1.5; color: #222; background: #ffffff; }
+            table { border-collapse:collapse; border-spacing:0; }
+            h1, h2, h3, h4, h5, h6, th { font-size: 100%; font-weight: normal; }
+            button,input,select,textarea{font-size:100%;}
+            fieldset,img{border:0;}
+            button,submit { cursor:pointer;}
+            a { text-decoration: none; color: #666; background: none; cursor:pointer; }
+            ul, ol { list-style: none; }
+            :focus{ outline:none;}
+            .clearfix{ clear: both; content: ""; display: block; overflow: hidden }
+            .clear{clear: both;}
+            .fl{ float: left; }
+            .fr{float: right;}
+            a:hover{
+            text-decoration: none;  /*鼠标放上去有下划线*/
+            }
+
+            .cf:after {
+            display: block;
+            clear: both;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+            content: '';
+            }
+
+            body {
+            /* font: 400 14px/1.5 "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif; */
+            font: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-style: normal;
+            letter-spacing: 1px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: #ffffff;
+            }
+
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+            }
+
+            input[type="number"]{
+                -moz-appearance: textfield;
+            }
+
+        </style>
+        
+        <!-- icon -->
+        <style>
+            @font-face {font-family: "iconfont";
+            src: url('//at.alicdn.com/t/font_1051782_yqidfrlxqqo.eot?t=1551089171449'); /* IE9 */
+            src: url('//at.alicdn.com/t/font_1051782_yqidfrlxqqo.eot?t=1551089171449#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAesAAsAAAAADhAAAAdeAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCEJgqNUIskATYCJAMsCxgABCAFhG0HgRAbBAwR1aTsyH4Uxm1OIVVS+vJPwqlUKt/JuZ2cWI2H/19L75v5E0RHFghUFAsbFaNz4ghKYHxrXCXPFlyF2elx03+PBEuoOjX1ABMLNFBq9ILUr2FzmNV85oJ8E6kBgr8fc1lE2/5xH2+LidIm9mZqEbFE3JEsNEIy0Qih4p0SIxbimct3cFh61sEEGvQZETslVQSokwh2IO5UqSBBXUIiVVSFOn5NwYYJxCVgq8s2sZ4ALryPj39gKnhApsiBONTeSXET2ChBRYQw/zOW5Qxg1qfCcDNyjCARrwo1jwAJYMTjNBSlok7RoY2EWSn/gmcpLJWfqT578HloRfR/lRJke0L30KEnnKRBrI9yZP/x1KpXQ9QAwWlC3rm3gRLoLhIlpBZxWWDLcj0hkoMrBFsVVwmRAlwVROrAfYAuaqmEdlFPRUS9+zQ02tQe9JL1cek3IEqPcLK7hUY0WjlNCAQedt6rBBGYq7dA4JnMlEEOKO2hhzlgOOQKocUixkwmYgyAFMBBit7NapU8s4htO7NZZDJVqcZcVtQiO2Q6r9XaY3vulW9h3iJBZ18swSAOMSiJIMRhItCgUb9kY+A6uHA91c740setibBYFKKDxuv6CLHksP6aIYwQHzJcYcJFxAHmqjGyTzzuNaP3nHaTTMy4Rmn7nIlR10sZ444JwwyjqxDnC2mjmGEEe+apUy6iMedJxmPKyZqEvV1MLhfTx6auMRw37o8r3S5najAuKLGM6VWWIwnpgxicGO9zrnE4fSgE23PAfWx0A2cGoCH2HAHo09Vgu/3XvdjTx6R7D3pMHjh3SH94MSRG98Q07hY5AcqmXmX42FifgDV5xXDNExHsu6a/HmqDzFw3XvVg2ey9ylzpM31CmD8VWT+XWD4jjEfdmStJhkte07eX7TkmkSzseRA09Noa+nGnNzE55Wa8HBn+wtTHmEShwVKotwJ+UE1Te3EjTG9TdObA4apMhEkJGbMA43HMYoX6Q4YDpOUz8frJW8k0fdK7udkWSSb0rq7jBmdCbNo5jzIuIkLkMrY2EAHcytQ90lVXMHThdWrr2Zc+V9G1QgCaj3WWl1nOK5rOXu4vtkNR57U3P2xCeBuR6ztd9SgbdaD8KQcA8gKx7x463R7xZ8U60JCt3n9Ez5Iku0PWalC/u/7P9vBtJx26XDhPZFC6ejVpgqF+NUvKIrEDKSTh6tUg8VNHtxDA/xf7j6ld/gTBo6BBYjBi0Ka/7x01rVG/O9AviLMJzYqgFYM2uiD/xXUHAlZ32tuDJ3iShE8H/nf85x9R/uV80T//+DcGsvc+JeseOQRHBwvfJms3BJWX9C4uGemO/PTNiJ2fjTsPeNngWwX/erHT5lqGMrQYJ787cqRkcUlvedAGsvaxX3BMsPAtsm59cJfCRaXNUb8+zBhC/wq24jZFsZ/VbecUzFAW9K5TFaTksIpIRDa0aNfVFAUSvlsBnfG/x+0EzzH0ct5I3mV0lOX4dlhqMMR4jXGzbpbpWzymuDdKklYdY/MfMU9Hnj2ZBHd/nv2weB3tgPpvTShQLGoS73k1V/i1vzPI/Jzd04sTaQTe23OCSCdOsDpRmuhXwO/9skdcnh18yH1kx3sI8XJjs0GneH5PtgfYCfgnqqjt/XZ5wTN74tEs7CNtyg/M6NOh3SL/Ot4QHfawLQEkDWbmx+mWLNXErVaEpUtjdathKb/n/KKlyuA9kbjztYF9c7mP9jEP84raR0R+KavAq8yvvcO33Ldyd+YIrR7K2j2SM1qhotFe4a8D/3eZUW9v1LDMAzKYUZKN7PKNBCGKqhsQMiGcuSWSFc7NDnJn3a07UOqc5c6ULopbNwtmAwmyexRhihuHcKm5uXHTO82/b2cmZc6ufmP2jbk3Zt4Ag18BoDrqDCJhaNgQwqD/6RGI1vgIGUBXyZFcxPjfINrtXWR5zR4jaKM/kG7fLZuQnL+GhcDZ6WPzK+2yfuXhPxfjvky938nNVSbYTpQ6LKAx7Y+A1nBIWjAEdR0DoqkdtY3aYtT1Q4McBfwFGDq8x3ndjWn/OTyXCGe4fHCOJygr5UXhAi4J1+DJxQ0ilW7eyAkNARMfAEPWMQzZO45ZbF3HCHtPs9C8dzGbq28xh30gGCMOpx3iQkKJFdIUqaGahNIeoVKm6pAruQbz4xsohbaNpOMMjyCmaLXSLoyPiUv7S6kOil7HKmqdIkGjkQvltKpdWMIOR7W1qYSdtKqFkmlimjWazozYWHnRqjEyVTvAFKJRSBrbvomQVA+xkoxKB/nYGljm/RtQFLTakOiKHufEYhSamnL6QvFixDXIKuV0NOpxX8xqOs8KaEglJ9Qumkp7wCvppqK0SY+KUGfxfC0oMhoxmju4OmWI5SPJm3Jits9rv705br5exR4agwURiEI25EAu5EE+/JfQC4DNVVg9Wqbq7OE2kepmskNhL2vW+qHKbi3Z0a1MsTjjVaneZiWbpjq6tEiLkuQo8ufs0fJ6m1Udim5lB3cxh1QZj7Yo27QAAAA=') format('woff2'),
+            url('//at.alicdn.com/t/font_1051782_yqidfrlxqqo.woff?t=1551089171449') format('woff'),
+            url('//at.alicdn.com/t/font_1051782_yqidfrlxqqo.ttf?t=1551089171449') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+            url('//at.alicdn.com/t/font_1051782_yqidfrlxqqo.svg?t=1551089171449#iconfont') format('svg'); /* iOS 4.1- */
+            }
+
+            .iconfont {
+                font-family: "iconfont" !important;
+                font-size: 18px;
+                font-style: normal;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .icon-reward:before {
+                content: "\e620";
+            }
+            .icon-setting:before {
+                content: "\e600";
+            }
+            .icon-task:before {
+                content: "\e669";
+            }
+            .icon-about:before {
+                content: "\e6c8";
+            }
+            .icon-record:before {
+                content: "\e601";
+            }
+            .icon-close:before {
+                content: "\e727";
+            }
+            .icon-add:before {
+                content: "\e755";
+            }
+            .icon-remove:before {
+                content: "\e61a";
+            }
+            .icon-reload:before {
+                content: "\e66f";
+            }
+            .icon-user:before {
+                content: "\e602";
+            }
+        </style>
+
+        <style>
+            .kun-aside{
+                height: 100%;
+                font-size: 14px;
+                color: #ffffff;
+                background: #545C64;
+            }
+            .kun-menu-item {
+                height: 60px;
+                line-height: 60px;
+                padding: 0 20px;
+                position: relative;
+                cursor: pointer;
+                white-space: nowrap;
+            }
+            .kun-menu-item *{
+                vertical-align: middle;
+            }
+            .kun-menu-item:hover {
+                background: #434a50;
+                -webkit-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+            }
+            .kun-menu .is-active, .kun-menu .is-active i{
+                color: #ffd04b;
+            }
+            .icon{
+                margin-right: 5px;
+                color: #878d99;
+            }
+
+
+
+            .kun-section {
+                flex: 1;
+            }
+            .kun-section i {  
+                /* display: none; */
+                position: relative;
+                overflow: hidden;
+            }
+            .kun-section .is-active{
+                /* position: relative;
+                overflow: hidden; */
+                /* position: relative; */
+                /* display: block; */
+                color: #409eff;
+                border-bottom-color: #ffffff;
+            }
+            .kun-section .is-active i{
+                /* display: inline; */
+                color: #409eff;
+            }
+            .tab-list {
+                /* display: inline-block; */
+                display: block;
+                height: 36px;
+                border-bottom: 1px solid #dfe4ed;
+                margin-bottom: -1px;
+            }
+            .header-tab, .header-info {        
+                /* display: inline-block; */
+                float: left;
+                position: relative;
+                height: 35px;
+                padding: 0 15px 0 20px;
+                border-left: 1px solid #dfe4ed;
+                border-bottom: 1px solid transparent;
+                line-height: 35px;
+                font-size: 13px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+            .header-tab:hover{
+                color: #409eff;
+                -webkit-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+            }
+            .header-tab:hover i{
+                display: inline;
+                color: #409eff;
+                -webkit-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+            }
+            .header-tab i {
+                /* position: relative; */
+                font-size: 13px;
+                height: 14px;
+                /* width: 14px; */
+                border-radius: 50%;
+                background: #ffffff;
+                vertical-align: middle;
+                margin: 0 0 0 5px;
+            }
+            .header-tab i:hover {
+                /* font-size: 14px; */
+                color: #457cd4;
+                background: #e7e9ee;
+            }
+            .tab-list-div {
+                /* position: relative; */
+                width: 100%;
+                float: left;
+                border: 1px solid #dfe4ed;
+                border-bottom: none;
+                border-radius: 4px 4px 0 0;
+            }
+
+
+            .show-content{
+                -webkit-box-flex: 1;
+                -ms-flex: 1;
+                flex: 1;
+                /* padding: 20px; */
+                /* height: 100%; */
+            }
+            .header-info {
+                float: right;
+            }
+
+            .left-result {
+                color: #FC5329;
+                /* font-weight: 600 */
+            }
+            .right-result {
+                color: #0069f3;
+                /* font-weight: 600 */
+            }
+            .list-group{
+                margin: 0;
+            }
+
+            .btn {
+                padding: 2px 12px;
+                vertical-align: initial;
+            }
+           
+        </style>
+    </head>
+    <body>
+        <main style="height: 100%; display: -webkit-box; display: -ms-flexbox; display: flex;">
+            <section class="kun-section">
+                <header class="tab-list">
+                    <div class="tab-list-div">
+                        <div data-name="ki13d7a" class="header-tab is-active">
+                            <span data-v-4cf1efcb="">秒盘/抢注</span>
+                            <i class="iconfont icon icon-close"></i>
+                        </div>
+                        <div data-name="ki13d7c" class="header-tab">
+                            <span data-v-4cf1efcb="">设置</span>
+                            <i class="iconfont icon icon-close"></i>
+                        </div>
+                    
+                        <div data-name="ki13d7c" class="header-ta header-info">
+                            <div class="btn btn-default do-clear">清空</div>
+                            <span style="margin: 0 30px 0 0">昵称：<span class="yw-js-nickname">获取中...</span></span>
+                            <span>鱼丸数：<span class="yw-number">获取中...</span></span>
+                            <div class="btn btn-info" id="login-douyu">账号登录</div>
+                        </div>
+                        
+                    </div>
+                    
+                </header>
+                <style>
+                     /* 内容界面 */
+                    .anchor{
+                        width: 400px; 
+                        padding: 10px;
+                        border: 1px solid #dfe4ed;
+                        border-radius: 4px;
+                    }
+                    .panel-body {
+
+                    }
+                    .show-content-mp {
+                        
+                        border: 1px solid #dfe4ed;
+                        padding: 6px;
+                        border-radius: 4px;
+                    }
+                    .show-content-mp .panel-body {
+                        padding: 0 0 5px 0;
+                        /* text-align: right; */
+                    }
+                    .show-content-anchor{
+                        display: inline-block;
+                        height: 120px;
+                        /* max-width: 420px; */
+                        overflow-y: auto;
+                    }
+                    .show-content-anchor table, .guess-record table{
+                        table-layout:fixed;
+                    }
+                    
+                    .anchor thead tr {
+                        background: #dfe4ed;
+                    }
+                    .anchor .room-state {
+                        float: right;
+                        font-size: 13px;
+                        /* cursor: pointer; */
+                    }
+                    .anchor .room-online {
+                        color: #0069f3;
+                    }
+                    .anchor .room-offline {
+                        color: #777676;
+                    }
+                    .anchor .room-monitoring {
+                        color: #f10101;
+                    }
+
+                    .anchor tbody tr td {
+                        padding: 5px;
+                        font-size: 15px;
+                    }
+                    .guess-record {
+                        -webkit-box-flex: 1;
+                        -ms-flex: 1;
+                        flex: 1;
+                    }
+                    .guess-record td, .guess-record th {
+                        text-align: center;
+                    }
+                    .guess-record tbody tr td, .show-content-anchor tbody tr td{
+                        vertical-align: middle;
+                        overflow: hidden; 
+                        text-overflow:ellipsis;  
+                        white-space: nowrap; 
+                    }
+                    .guess-record .do-something {
+                        border-bottom: 1px solid #dfe4ed;
+                        text-align: left;
+                        padding: 5px 5px;
+                        line-height: 35px;
+                    }
+                    .guess-record-reg {
+                        max-height: 550px;
+                        overflow-y: auto;
+                    }
+                    .guess-record .do-work {
+                        padding: 0;
+                    }
+                    .guess-record .guess-num, .guess-record .guess-odds {
+                        /* display: block; */
+                        /* float: left; */
+                        width: 90px;
+                        height: 23px;
+                        border: none;
+                        border-radius: 14px;
+                        box-sizing: border-box;
+                        font-size: 13px;
+                        text-align: center;
+                        background: #f1efef;
+                        outline: 0;
+                        width: 90px;
+                    }
+                    .guess-record .xz {
+                        /* margin: 0 0 0 25px; */
+                    }
+                    .guess-record .kc {
+                        margin: 0 0 0 0;
+                    }
+                    .guess-record .row {
+                        margin: 0;
+                        padding: 0;
+                        
+                    }
+                    .guess-record .col-md-1 {
+                        margin: 0;
+                        padding: 0;
+                        line-height: 73px;
+                        text-align: center
+                    }
+
+                    .guess-record .col-md-5 {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .input-roomId {
+                        font-size: 14px;
+                        padding: 2px 5px;
+                        border: 1px solid #b5b7b9;
+                        border-radius: 5px;
+                    }
+                    .icon-ar {
+                        font-size: 13px;
+                    }
+                    .icon-a {
+                        color: #ffffff;
+                    }
+                    .icon-r {
+                        color: #878d99;
+                    }
+                </style>
+                
+
+                <style>
+                    table.anchor>thead>tr>td, table.anchor>thead>tr>th {
+                        padding: 0 8px;
+                        font-size: 13px;
+                    }
+                    .show-content-anchor::-webkit-scrollbar {
+                        display: none;
+                    }
+                    body::-webkit-scrollbar {
+                        display: none;
+                    }
+                    table.anchor>tbody>tr>td, table.anchor>tbody>tr>th {
+                        padding: 0 8px;
+                        font-size: 12px;
+                    }
+                </style>
+                <div class="show-content">
+                    <div data-name="ki13d7a" class="show-content-mp">
+                        <!-- <span data-v-4cf1efcb="">主播</span> -->
+                        <div class="show-content-anchor">
+                            <div class="panel-body">  
+                                <div class="list-op" id="list_op">  
+                                    <input type="text" class="input-roomId" maxlength="15" placeholder="房间号">
+                                    <div type="button" class="btn btn-primary btn-sm addRoomId">  
+                                        <i class="iconfont icon icon-add icon-ar icon-a"></i>新增  
+                                    </div> 
+                                    <div type="button" class="btn btn-default btn-sm removeRoomId">  
+                                        <i class="iconfont icon icon-remove icon-ar icon-r"></i>删除  
+                                    </div>
+                                    <div type="button" class="btn btn-default btn-sm reloadRoomId">  
+                                        <i class="iconfont icon icon-reload icon-ar icon-re"></i>刷新  
+                                    </div> 
+                                </div>  
+                            </div> 
+                            <script>
+                                
+                            </script>
+                            <table class="anchor table table-striped table-bordered table-hover">
+                                <col style="width: 10%" />
+                                <col style="width: 50%" />
+                                <col style="width: 40%" />
+                                <thead>
+                                    <tr>
+                                        <td><input type="checkbox" name="checkItem" /></td>
+                                        <th>主播</th>
+                                        <th>房间号</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>                           
+                        </div>
+                        <style>
+                            .show-content-other {
+                                /* width: 1000px; */
+                                
+                                float: right;
+                                
+                            }
+                            .show-content-other ul {
+                                display: inline-block;
+                                margin: 0;
+                                padding: 0;
+                            }
+                            .message-history {
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                float: right;
+                            }
+                            .message-history li {
+                                border: none;
+                                padding: 2px 10px;
+                                font-size: 14px;
+                                letter-spacing: 0;
+                                color: #457cd4;
+                                word-wrap:break-word;
+                            }
+                            .show-content-other .message-history {
+                                height: 120px;
+                                width: 420px;
+                                overflow-y: auto;
+                            }
+                            .user-info {
+                                display: inline-block;
+                                width: 300px;
+                            }
+                            .opened-anchor-div table{
+                                table-layout:fixed;
+                            }
+                            .opened-anchor-div {
+                                display: inline-block;
+                                height: 180px;
+                                /* max-width: 420px; */
+                                overflow-y: auto;
+                            }
+                            .opened-anchor-div tbody tr td{
+                                vertical-align: middle;
+                                overflow: hidden; 
+                                text-overflow:ellipsis;  
+                                white-space: nowrap; 
+                            }
+                            .guess-record .odds {
+                                /* position: relative; */
+                            }
+                            .guess-record .leftOdds, .guess-record .rightOdds {
+                                /* position: absolute; */
+                                /* left: 8px; */
+                                /* bottom: 30px; */
+                                /* float: left; */
+                                display: inline-block;
+                                /* text-align: center; */
+                                /* margin: 0 auto; */
+                                /* width: 100px; */
+                                /* margin: 10px 0 0 0; */
+                            }
+                            .guess-record .leftOdds {
+                                color: #0069f3;
+                            }
+                            .guess-record .rightOdds {
+                                color: #FC5329;
+                            }
+                            .guess-record .left-xz {
+                                /* margin: 0 20px 0 90px; */
+                            }
+                            .guess-record .right-kc {
+                                margin: 0;
+                            }
+                            .guess-record .odds {
+                                background: #eaf0f0;
+                                border-radius: 6px;
+                                padding: 5px 5px 5px 10px;
+                            }
+                            .guess-record .left-20 {
+                                margin: 0 25px 0 25px;
+                            }
+                            .guess-record .col-md-1 {
+                                width: 60px;
+                                line-height: 92px;
+                                text-align: center;
+                            }
+                            .guess-record .do-xz, .guess-record .do-kc {
+                                vertical-align: initial;
+                            }
+                            .kc-xz {
+                                float: right;
+                                margin: 90px 5px 0 0;
+                            }
+                        </style>
+                        
+                        <div class="show-content-other">      
+                            <ul class="message-history list-group">
+                            </ul>
+                        </div>
+                        <div class="btn btn-default kc-xz" data-content="kc">开</div>
+                        <style>
+                            .guess-record table{
+                                width: 290px;
+                                border-radius: 3px;
+                                float: left;
+                                /* margin: 0 10px 0 0; */
+                                margin: 0;
+                            }
+                            .guess-record tbody tr td{
+                                border: 0;
+                            }
+                            .guess-record .title, .guess-record .anchor-z {
+                                text-align: left;
+                                font-weight: 600;
+                                color: rgb(80, 78, 78);
+                                font-size: 13px;
+                            }
+                            .guess-record .record-content-row {
+                                margin: 8px 0 0 0;
+                                text-align: left;
+                                /* width: 140px; */
+                            }
+                            .guess-record .odds {
+                                text-align: center;
+                            }
+                            .guess-record .xz {
+                                font-size: 15px;
+                            }
+                            .guess-record .do-xz, .guess-record .do-kc {
+                                padding: 3px 12px;
+                            }
+                            .guess-record .item-left {
+                                /* padding: 4px 2px 3px 2px; */
+                                padding: 2px 0;
+                                background: #e6e4e4;
+                                color: #302f2f;
+                                border-radius: 16px;
+                                text-align: center;
+                                font-size: 14px;
+                            }
+                            .to-rob .item-left, .to-rob .item-right {
+                                margin: 3px 0;
+                            }
+                            .guess-record .item-right {
+                                /* padding: 4px 2px 3px 2px; */
+                                /* background: #8b8b8b;
+                                color: #fafafa; */
+                                padding: 2px 0;
+                                background: #e6e4e4;
+                                color: #302f2f;
+                                border-radius: 16px;
+                                text-align: center;
+                                font-size: 14px;
+                            }
+                            .guess-record .do-xz, .guess-record .do-kc {
+                                display: inline-block;
+                                margin: 0 0 0 15px;
+                                padding: 2px;
+                                width: 70px;
+                                font-size: 12px;
+                                text-align: center;
+                                border-radius: 15px;
+                                cursor: pointer;
+                            }
+                            .guess-record .do-kc {
+                                display: block;
+                                margin: 0 auto;
+                                width: 90px;
+                            }
+                            .guess-record .left-do-xz, .guess-record .left-do-kc {
+                                border: 1px solid #ccc;
+                                background: #ffffff;
+                                color: #333;
+                            }
+                            .guess-record .left-do-xz:hover, .guess-record .left-do-kc:hover {
+                                background: #e6e4e4;
+                                color: #333;
+                            }
+                            .guess-record .right-do-xz, .guess-record .right-do-kc {
+                                background: #8d8c8c;
+                                color: #ffffff;
+                            }
+                            .guess-record .right-do-xz:hover, .guess-record .right-do-kc:hover {
+                                background: #6e6d6d;
+                                color: #ffffff;
+                            }
+                            .guess-record .is-mp, .guess-record .is-kc99 {
+                                position: absolute;
+                            }
+                            .guess-record .anchor-z i {
+                                font-size: 13px;
+                                color: #b9b7b7;
+                            }
+                            .guess-record .anchor-z {
+                                color: #b9b7b7;
+                            }
+                            .to-guess {
+                                display: none;
+                            }
+                        </style>
+
+
+                        <style>
+                            .guess-record-reg .list-group-item {
+                                padding: 0;
+                            }
+                        </style>
+
+                        <style>
+                            .guess-record-reg .to-rob .list-group-item {
+                                padding: 0;
+                            }
+                            .guess-record-reg .to-rob .table>tbody>tr>td {
+                                padding: 4px;
+                            }
+                            .guess-record-reg .to-guess .table>tbody>tr>td {
+                                padding: 4px;
+                            }
+                            .to-rob div.kc-xz-in {
+                                text-align: left;
+                                margin: 0;
+                                padding: 0 15px;
+                                line-height: 1;
+                            }
+                            .to-rob div.kc-xz-in .xz input {
+                                line-height: 19px
+                            }
+
+                            .to-rob .kc-xz-in .xz {
+                                font-size: 12px;
+                                width: 60px;
+                            }
+                            .guess-record .do-xz {
+                                margin: 0 0 0 15px;
+                            }
+                            .to-rob input[type=checkbox] {
+                                margin: 0;
+                            }
+                        </style>
+                        <div class="guess-record-reg">
+                                <ul class="list-group guess-record to-guess">
+                                </ul>
+                                <ul class="list-group guess-record to-rob">
+                                </ul>
+
+                            
+                        </div>
+                        
+                        <script>  
+                            
+                        </script>  
+                    </div>
+                    <div data-name="ki13d7b" class="show-content-record" style="display:none">
+                        <span data-v-4cf1efcb="">竞猜记录</span>
+                        <i class="iconfont icon icon-close"></i>
+                    </div>
+                    <div data-name="ki13d7c" class="show-content-setting" style="display:none">
+                        <span data-v-4cf1efcb="">设置</span>
+                        <i class="iconfont icon icon-close"></i>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <style>
+            .msg {
+                position: fixed;
+                bottom: 30px;
+                right: 50px;
+                z-index: 200;
+            }
+            
+            .message {
+                position: relative;
+                right: -100%;
+                width: 350px;
+                height: 70px;
+                /* z-index: 1; */
+                text-align: center;
+                font-size: 16px;
+                line-height: 70px;
+                background-color: #fcf8e3;
+                margin: 15px auto;
+                border-radius: 5px;
+                border: 1px solid #a5a4a1;
+                -webkit-box-shadow: 5px 7px 7px -3px rgba(0, 0, 0, .2);
+                box-shadow: 5px 7px 7px -3px rgba(0, 0, 0, .2);
+                -moz-box-shadow: 5px 7px 7px -3px rgba(0, 0, 0, .2);
+            }
+            
+            .message-in {
+                right: 30px;
+                -webkit-transition: right .2s linear;
+                -moz-transition: right .2s linear;
+                -o-transition: right .2s linear;
+                transition: right .2s linear;
+            }
+            
+            .message-out {
+                right: -100%;
+                -webkit-transition: right .1s linear;
+                -moz-transition: right .1s linear;
+                -o-transition: right .1s linear;
+                transition: right .1s linear;
+            }
+            
+            .message i {
+                position: absolute;
+                font-size: 28px;
+                left: 40px;
+            }
+            
+            .message span {
+                font-size: 16px;
+            }
+            
+            .m-success {
+            
+                color: #449d44;
+                background-color: #ffffff;
+                border-color: #7ADA5B;
+            
+            }
+            .m-success i {
+                color: #33CC66;
+            }
+            
+            .m-error {
+                color: #d9534f;
+                background-color: #fdfcfc;
+                border-color: #F3AF9E;
+            }
+            .m-error i {
+                color: #FC5329;
+            }
+            
+            .m-warn {
+                color: #db8e23;
+                background-color: #fdfcfc;
+                border-color: #FF9900;
+            }
+            .m-warn i {
+                color: #FF9900;
+            }
+        </style>
+
+        <aside class="msg"></aside>
+
+        
+    </body>
+</html>

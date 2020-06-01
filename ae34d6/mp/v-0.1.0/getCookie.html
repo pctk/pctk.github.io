@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>斗鱼获取cookie</title>
+
+        <script src="../jquery-3.1.0.min.js"></script>
+        <style>
+            html, body{
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- <main style="height: 100%;">
+            <webview id="foo" src="https://www.douyu.com/member/cp/" nodeintegration disablewebsecurity style="height: 100%;" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"></webview>
+        </main> -->
+        
+        <!-- common -->
+        <script>
+            async function Fetch (url, type,  data, token, method) {
+                type = type.toUpperCase()
+
+                let requestConfig = {
+                    credentials: 'include',
+                    method: type,
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: data
+                }
+
+                try {
+                    const response = fetch(url, requestConfig)
+                    return response
+                } catch (error) {
+                    return error
+                }
+            }
+            function setCookie(name,value) {
+                let Days = 30;
+                let exp = new Date();
+                exp.setTime(exp.getTime() + Days*24*60*60*1000);
+                document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ";path=/;domain=.juekr.com";
+            }
+
+            // setCookie('dy_did', DevicesId);
+            // setCookie('acf_username', UserName);
+            // setCookie('acf_uid', UId);
+            // setCookie('acf_ltkid', ltkid);
+            // setCookie('acf_stk', acfStk);
+
+        </script>
+        <script>
+        //     const webview = document.getElementById('foo')
+
+        //     webview.addEventListener('dom-ready', e => {
+        //         console.log('---------');
+                
+        //         webview.executeJavaScript(`
+        //             console.log('executeJavaScript start');
+        //             let injectCustomJs = function(jsPath) {
+        //                 let doc = document,
+        //                 temp = doc.createElement('script');
+        //                 temp.setAttribute('type', 'text/javascript');
+        //                 temp.src = jsPath;
+        //                 temp.onload = function() {
+        //                     this.parentNode.removeChild(this);
+        //                 };
+        //                 doc.head.appendChild(temp);
+        //             };
+        //             // injectCustomJs('https://www.juekr.com/mpcf1d3d9ba234c/jquery-3.1.0.min.js?v=0.0.0');
+        //             // injectCustomJs('https://www.juekr.com/mpcf1d3d9ba234c/v-0.1.0/getCookie.js?v=0.0.0');
+        //         `, false, function(){});
+        //     });
+
+        //     // const preloadFile = 'file://' + require('path').resolve('./guessGame.js');
+        //     // const preloadFile = 'https://www.juekr.com/mpcf1d3d9ba234c/jquery-3.1.0.min.js';
+        //     // webview.setAttribute('preload', preloadFile);
+
+        //     // // const preloadFile1 = 'file://' + require('path').resolve('./inject.js');
+        //     // const preloadFile1 = 'https://www.juekr.com/mpcf1d3d9ba234c/v-0.1.0/getCookie.js?v=0.0.0';
+        //     // webview.setAttribute('preload', preloadFile1);
+
+            
+        //     webview.addEventListener('ipc-message', (event) => { //ipc-message监听，被webview加载页面传来的信息
+        //         let data = event.channel;
+        //         console.log(data);
+        //         if ('ready' == data) {
+        //             weiXinReady = true;
+        //         }
+        //     })
+
+        //     // const preloadFile0 = 'file://' + require('path').resolve('./common.js');
+        //     // webview.setAttribute('preload', preloadFile0);
+
+        //     // // console.log(preloadFile)
+        //     webview.addEventListener('console-message', e => {
+        //         console.log('webview: ' + e.message);
+        //     });
+
+            const ipc = require('electron').ipcRenderer;
+            ipc.on('cookie-msg', async (event, arg) => {
+                console.log(arg)
+            });
+
+            // webview.addEventListener('did-get-response-details', details => {
+            //     console.log(details); 
+            // });
+//             const {shell} = require('electron');
+//             // shell.openExternal('https://github.com');
+//             const webview = document.getElementById('foo')
+// webview.addEventListener('new-window', (e) => {
+//     const protocol = require('url').parse(e.url).protocol;
+//     if (protocol === 'http:' || protocol === 'https:') {
+//         webview.src = e.url;
+//     }
+// });
+        </script>
+    </body>
+</html>
