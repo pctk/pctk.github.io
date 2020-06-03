@@ -129,7 +129,7 @@ _LOADING_START_HTML.innerHTML = `<div id="_LOADING">
 </div>`;
 
 
-document.body.appendChild(_LOADING_START_HTML)
+document.body.prepend(_LOADING_START_HTML)
 
 
 
