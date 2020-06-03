@@ -114,9 +114,7 @@ _LOADING_START_CSS.innerHTML = `#_LOADING{
 }`;
 document.head.appendChild(_LOADING_START_CSS);
 
-
 let _LOADING_START_HTML = document.createElement('div');
-
 _LOADING_START_HTML.innerHTML = `<div id="_LOADING">
 <div id="_LOADING-CENTER">
     <div id="_LOADING_CENTER_ABSOLUTE">
@@ -126,14 +124,14 @@ _LOADING_START_HTML.innerHTML = `<div id="_LOADING">
         <div class="_OBJECT" id="_OBJECT_FOUR" style="left:3.75rem;"></div>
         <div class="_OBJECT" id="_OBJECT_FIVE" style="left:5rem;"></div>
     </div>
-    <span class="_LOADING" id="_LOADING-CENTER-tips">玩命加载中</span>
+    <span class="_LOADING" id="_LOADING-CENTER-TIPS">玩命加载中</span>
 </div>
 </div>`;
+document.body.prepend(_LOADING_START_HTML)
 
-
-// document.body.prepend(_LOADING_START_HTML)
-
-
+window.onload = function() { 
+    document.getElementById("_LOADING").remove();
+}
 
 
 
