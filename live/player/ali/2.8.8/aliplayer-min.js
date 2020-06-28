@@ -7659,7 +7659,7 @@
                         var i = "aliplayer-flv-min.js"
                         //   , r = "https://" + d.domain + "/de/prismplayer/" + d.h5Version + "/flv/" + i;
                         // tkcustom
-                        ,  r = "/player/ali/2.8.8/" + i;
+                        ,  r = "./player/ali/2.8.8/" + i;
                         d.domain ? -1 < d.domain.indexOf("g-assets.daily") ? r = "http://" + d.domain + "/de/prismplayer/" + d.h5Version + "/flv/" + i : -1 < d.domain.indexOf("localhost") && (r = "http://" + d.domain + "/build/flv/" + i) : r = this._options && this._options.sdkDomain ? this._options.sdkDomain + "/de/prismplayer/" + d.h5Version + "/flv/" + i : "de/prismplayer/" + d.h5Version + "/flv/" + i;
                         var o = this;
                         a.loadJS(r, function() {
