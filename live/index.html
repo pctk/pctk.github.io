@@ -143,11 +143,11 @@ $(document).on('click', '.reduce', function(ev) {
 
 
 let isDoTime = true;
-setInterval(function() {
-    $('.current-time').html(player.getCurrentTime());
-    if (isDoTime) {
-        $('.end-time').html(player.getBuffered().end(0) - player.getCurrentTime());
-    }
-}, 1000);
+// setInterval(function() {
+//     $('.current-time').html(player.getCurrentTime());
+//     if (isDoTime) {
+//         $('.end-time').html(player.getBuffered().end(0) - player.getCurrentTime());
+//     }
+// }, 1000);
 </script>
 </body>
