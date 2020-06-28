@@ -52,7 +52,7 @@ _LOADING_START_CSS.innerHTML = `#_LOADING{
 ._OBJECT{
    width: 1.25rem;
    height: 1.25rem;
-   background-color: #db5800;
+   background-color: #0069f3;
    -moz-border-radius: 50% 50% 50% 50%;
    -webkit-border-radius: 50% 50% 50% 50%;
    border-radius: 50% 50% 50% 50%;
@@ -96,7 +96,6 @@ _LOADING_START_CSS.innerHTML = `#_LOADING{
  95% { left: 6.25rem; top: -1.25rem; width: 1.25rem; height: 1.25rem;}
  100% { left: 6.25rem; top:0; }
 }
-
 @media only screen and (min-width: 216pt){
    html {
        font-size: 16px !important; 

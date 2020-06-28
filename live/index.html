@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge" >
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+<title>QQ群:423883680</title>
+<link rel="stylesheet" src="css/bootstrap.min.css"></link>
+<link rel="stylesheet" src="css/index.css"></link>
+<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="player/ali/2.8.8/aliplayer-min.css" />
+<script type="text/javascript" charset="utf-8" src="player/ali/2.8.8/aliplayer-min.js"></script>
+
+</head>
+<body style="margin:2px;">
+    <style>
+        .prism-player {
+            float: right;
+        }
+        .name {
+            display: block;
+            height: 820px
+        }
+        .buts, .current-time, .end-time {
+            padding-left: 480px;
+        }
+    </style>
+<div class="prism-player" id="player-con"></div>
+<br>
+<span class="name">大司马:606118；金咕咕:252140；叶音符:12313；阿瞬:5245124；孙悟空:475252；蓝战非:11579；温柚:5910850；妃凌雪:78561；pigff:24422；于小C:1126960；微笑:16101；周淑怡:290935；小杰:74751；小马:441868；蓝波:5526219；林蒙:748396；艺帝帝:3857053；DY:952595；骚白:911；有痕:4289572；</span>
+<div class="current-time"></div>
+<div class="end-time"></div>
+
+<div class="buts">
+
+    <span class="speed">1</span>
+    <br>
+    <!-- <input class="num"></input> -->
+    <button class="add">快速+</button>
+    <button class="reduce">快速-</button>
+    <br>
+    <button class="add-slow">慢速+</button>
+    <button class="reduce-slow">慢速-</button>
+    <button class="pause">暂停</button>
+    <button class="goon">继续</button>
+
+    <button class="jump">最新-</button>
+</div>
+
+<script>
+    let url = document.location.toString();
+    let arrUrl = url.split("#")[1];
+var player = new Aliplayer({
+  "id": "player-con",
+  "source": arrUrl,
+  "width": "1440px",
+  "height": "810px",
+  "autoplay": true,
+  "isLive": true,
+  "rePlay": false,
+  "playsinline": false,
+  "preload": false,
+  "loadDataTimeout": "0",
+  "enableStashBufferForFlv": false,
+  "stashInitialSizeForFlv": "0",
+  "controlBarVisibility": "hover",
+  "useH5Prism": true
+}, function (player) {
+    // player._switchLevel = 0;
+    player.setVolume(0.04)
+    console.log("播放器创建了。");
+//     window.setInterval(function() {
+//         player.seek(player.getBuffered().end(0) - 1);
+//         console.log(player.getBuffered().end(0))
+// //         player.setCurrentTime(player.getBuffered().end(0))
+
+// // console.log(document.getElementsByTagName('video').currentTime)
+// //         document.getElementsByTagName('video').currentTime = player.getBuffered().end(0);
+// //         player.currentTime = player.getBuffered().end(1);
+//     }, 100);
+  }
+);
+
+let autoEnd = false;
+$(document).on('click', '.pause', function(ev) {
+    isDoTime = false;
+     player.pause();
+     autoEnd = window.setInterval(function(){
+        player.toEnd();
+        $('.end-time').html(player.getBuffered().end(0) - player.getCurrentTime());
+     }, 150);
+});
+
+$(document).on('click', '.goon', function(ev) {
+     if (autoEnd) {
+        isDoTime = true;
+        player.play();
+        window.clearInterval(autoEnd);
+        autoEnd = false;
+     }
+});
+
+
+
+$(document).on('click', '.jump', function(ev) {
+    console.log(player.getBuffered().end(0))
+     player.toEnd();
+    // player.seek(player.getBuffered().end(0) - 0.1);
+});
+
+
+
+
+let speed = 1;
+
+$(document).on('click', '.add-slow', function(ev) {
+    let bum = $('.num').val()
+    speed += 0.1;
+    $('.speed').html(speed)
+    player.setSpeed(speed)
+});
+$(document).on('click', '.reduce-slow', function(ev) {
+    let bum = $('.num').val()
+    speed -= 0.1;
+    $('.speed').html(speed)
+    player.setSpeed(speed)
+});
+
+$(document).on('click', '.add', function(ev) {
+    let bum = $('.num').val()
+    speed += 0.5;
+    $('.speed').html(speed)
+    player.setSpeed(speed)
+});
+$(document).on('click', '.reduce', function(ev) {
+    let bum = $('.num').val()
+    speed -= 0.5;
+    $('.speed').html(speed)
+    player.setSpeed(speed)
+});
+
+
+let isDoTime = true;
+setInterval(function() {
+    $('.current-time').html(player.getCurrentTime());
+    if (isDoTime) {
+        $('.end-time').html(player.getBuffered().end(0) - player.getCurrentTime());
+    }
+}, 1000);
+</script>
+</body>
