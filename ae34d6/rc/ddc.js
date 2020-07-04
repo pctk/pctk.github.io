@@ -443,6 +443,25 @@ $(document).ready(function () {
       await sendToSelf(newSelfData);
       // 自己结束
 
+      // 猪头开始
+      let zhuTouStr = `群内设置免打扰, 祝各位游戏愉快<br><记录时间24小时><br><br>${roomAnchor}<br>`,
+      zhuTouEndStr = '<br>买卖海鲜私聊群主  百万优惠<br>☞本记录依据主播结算结果☜';
+      zhuTouStr += midStr + zhuTouEndStr;
+      let newZhuTouData = {
+        "action": 1,
+        "roomInfo": `${roomAnchor}：${roomId}`,
+        "title": titleClient,
+        "contentNum": contentNumClient,
+        "contentStar": contentStarClient
+      }
+      console.log(newZhuTouData);
+      console.log("发送至新猪头手机");
+
+      await sendToZhuTou(newZhuTouData);
+      // 猪头结束
+
+      
+
       sysSend = false;
     });
   
@@ -528,6 +547,8 @@ $(document).ready(function () {
         await sendToGangBeng(newAbcData); // 发送到钢镚
 
         await sendToSelf(newAbcData); // 发送到自己
+
+        await sendToZhuTou(newAbcData); // 发送到猪头
 
         console.log("发送至微信");
         ipcRenderer.send('to-wx-msg', {
@@ -683,6 +704,21 @@ $(document).ready(function () {
             console.log('自己发送客户端成功');
           } else {
             console.log('自己发送客户端失败');
+          }
+        });
+    
+        // await sendDataWX(abcStr);
+      }
+      async function sendToZhuTou(zhuTouStr) {
+        const abcWebToMobileUrl = 'http://127.0.0.1:10236/zhutou/stm_ws';
+
+        Fetch(abcWebToMobileUrl, 'post', zhuTouStr).then(res => res.text())
+        .then(res => {
+          res=JSON.parse(res);
+          if (res.code == '0000') {
+            console.log('猪头发送客户端成功');
+          } else {
+            console.log('猪头发送客户端失败');
           }
         });
     
