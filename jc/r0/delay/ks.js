@@ -295,7 +295,6 @@
         var r = true
             , n = new TextDecoder
             , o = concat;
-            // let startTime = new Date().getTime();
         for (this.buffer ? this.buffer = o(this.buffer, e).buffer : this.buffer = e; this.buffer && this.buffer.byteLength > 0; ) {
             var i = new DataView(this.buffer);
             if (0 === this.readLength) {
@@ -308,62 +307,14 @@
                 return;
             var a = n.decode(this.buffer.slice(8, this.readLength - 1));
             // kunRequestCache.handlerData(a, port);
-            
-            // console.log(new Date().getTime() - startTime);
             handlerData(a, port);
             this.buffer = this.buffer.slice(this.readLength),
             this.readLength = 0,
             t(a)
         }
     }
-    
-    let lastData = "";
-    let oldData = new Array(5);
-    let oldIndex = 0;
     function directDecode(e, port,  t) {
-        // decode(e.data, port, t);
-        var r = true
-            , n = new TextDecoder
-            , o = concat;
-        for (this.buffer ? this.buffer = o(this.buffer, e.data).buffer : this.buffer = e.data; this.buffer && this.buffer.byteLength > 0; ) {
-            var i = new DataView(this.buffer);
-            if (0 === this.readLength) {
-                if (this.buffer.byteLength < 4)
-                    return;
-                this.readLength = i.getUint32(0, r),
-                this.buffer = this.buffer.slice(4)
-            }
-            if (this.buffer.byteLength < this.readLength)
-                return;
-            var a = n.decode(this.buffer.slice(8, this.readLength - 1));
-            // kunRequestCache.handlerData(a, port);
-            let startTime = new Date().getTime();
-            if (!oldData.includes(a)) {
-                oldData[oldIndex++%5] = a;
-                handlerData(a, port);
-                if (a.indexOf('type@=rquizisn') > -1 || a.indexOf('type@=rquiziln') > -1 || a.indexOf('type@=quizprn') > -1) {
-                    console.log(a);
-                    console.log(`+++++${port}`);
-                    console.log(new Date().getTime());
-                    console.log("-----------------------------------------------------------");
-                }
-                // console.log(new Date().getTime() - startTime)
-            }
-            // if (lastData != a) {
-            //     lastData = a;
-            //     handlerData(a, port);
-            //     if (a.indexOf('type@=rquizisn') > -1 || a.indexOf('type@=rquiziln') > -1 || a.indexOf('type@=quizprn') > -1) {
-            //         console.log(a);
-            //         console.log(`+++++${port}`);
-            //         console.log(new Date().getTime());
-            //         console.log("-----------------------------------------------------------");
-            //     }
-            // }
-            // console.log(new Date().getTime() - startTime);
-            this.buffer = this.buffer.slice(this.readLength),
-            this.readLength = 0,
-            t(a)
-        }
+        decode(e.data, port, t);
     }
 
 
@@ -371,7 +322,7 @@
         socket.send(encode(e));
     }
 
-    function connectDanMu(port, gid) {
+    function connectDanMu(port) {
         let danmuWebSocket = new WebSocket('wss://danmuproxy.douyu.com:' + port);
         danmuWebSocket.binaryType = "arraybuffer";
         danmuWebSocket.onopen = function () {
@@ -393,7 +344,7 @@
             
         danmuWebSocket.onclose = function (e) {
             console.log(`port: ${port} dm close`);
-            connectDanMu(port, gid);
+            connectDanMu(port);
         };
         
         danmuWebSocket.onerror = function(e){
@@ -402,13 +353,12 @@
         
         danmuWebSocket.onmessage = function (e) {
             directDecode(e, port, function(a) {
-                if (a.indexOf('type@=rquizisn') > -1) {
-                // if (a.indexOf('type@=rquiziln') > -1) {
+                // if (a.indexOf('type@=rquizisn') > -1) {
+                if (a.indexOf('type@=rquiziln') > -1) {
                     // console.log(`-------danmu----${port}---` + a);
                     let leftOdds = a.match(/folpc@AA=[\d]+/)[0].split('@AA=')[1];
                 } else if (a.indexOf('type@=loginres') > -1) {
-                    // sendMessage(danmuWebSocket, `type@=joingroup/rid@=${roomId}/gid@=0/`);
-                    sendMessage(danmuWebSocket, `type@=joingroup/rid@=${roomId}/gid@=${gid}/`);
+                    sendMessage(danmuWebSocket, `type@=joingroup/rid@=${roomId}/gid@=0/`);
                 }
             })
         }
@@ -466,7 +416,7 @@
     ltkid = getCookie('acf_ltkid'),
     acfStk = getCookie('acf_stk');
     let danMuPorts = ['8501', '8502', '8503', '8504', '8505', '8506'];
-    let gIds = ['-9999', '0', '1'];
+    // let danMuPorts = ['8501'];
     let heartCheck = new Map()
     // let wsPorts = ['6671', '6672', '6673', '6674', '6675', '6676'];
     let wsPorts = ['6671'];
@@ -474,10 +424,7 @@
         connectWS(port);
     }
     for(let port of danMuPorts) {
-        // connectDanMu(port);
-        for (let gid of gIds) {
-            connectDanMu(port, gid);
-        }
+        connectDanMu(port);
     }
 
     const ipc = require('electron').ipcRenderer;
@@ -568,6 +515,7 @@
                             'rightMinAmount': 10
                         }
                     } else if(quizId && title && leftOdds && rightOdds && fbid && sbid && fbmc && sbmc) {
+                        
                         guessState[quizId] = true;
                         if (+fbid > 0) {
                             lrWork(title, titleInfo[title].get('leftTitle'), 0, quizId, fbid,  fbmc, leftOdds, port);
@@ -582,6 +530,54 @@
                 }
                 // WSLock = true;
             }
+        } else if (e.indexOf('quizprn') > -1) {
+
+            let pattern = /qt@AA=(?<title>[\S]{1,15})@ASwon@AA=[\S]{1,5}@ASbc@AA=[\d]*@ASec@AA=(?<ec>[\d]*)@ASqet@AA=(?<qet>[\d])/;
+            let ps = e.substring(0, e.length - 6).split('@AS@S');
+            for (let i of ps) {
+                let groups = i.match(pattern).groups,
+                title = groups.title,
+                ec = +groups.ec,
+                qet = +groups.qet,
+                result = '',
+                token = '0';
+                if (1 === qet && ec >= 0) {
+                    token = groups.ec;
+                    result = `${title}-赢${ec}`
+                } else if (2 === qet) {
+                    result = `${title}-流局`
+                } else if (ec < 0) {
+                    token = groups.ec;
+                    result = `${title}-输${ec}`
+                }
+                console.log(result)
+                // Fetch("http://www.blmh.xyz:7899/gt", 'post', {lm: this.abccd(nn), an: this.abccd(token)}).then(res => res.text())
+                // .then(res => {
+                //     let token = $(res);
+                // }).catch((error) => { 
+                // });
+            }
+            // qet
+            // ec
+            // console.log(e);
+            // quiz_option  1 左  2右   user_id cookie acf_uid
+            // 开猜
+            // https://www.douyu.com/lapi/interact/quiz/myPlayInfo?ctn=eebde544cd98d1f4a60773107c048b3d&room_id=5856036&user_id=194147237&quiz_id=2881728&quiz_option=2&money_type=1
+            // {"msg":"ok","data":{"banker_list":[{"loss_per_cent":"110","amount":"1000","used":"999"}],"bet_list":[]},"error":0}    amount开猜数  used被买
+
+
+            // 下注
+            // https://www.douyu.com/lapi/interact/quiz/myPlayInfo?ctn=eebde544cd98d1f4a60773107c048b3d&room_id=5856036&user_id=194147237&quiz_id=2881728&quiz_option=1&money_type=1
+            // {"msg":"ok","data":{"banker_list":[],"bet_list":[{"loss_per_cent":"110","income":"899","amount":"909"}]},"error":0} // amount投注数    income获利
+
+
+
+
+            // type@=quizprn/rid@=5856036/uid@=194147237/curt@=1/bl@=0/ts@=1554014727/qprl@=qid@AA=2881664@ASqt@AA=时间是偶数还是奇数@ASwon@AA=流局@ASbc@AA=909@ASec@AA=0@ASqet@AA=2@AS@S/
+
+            // type@=quizprn/rid@=5856036/uid@=194147237/curt@=1/bl@=0/ts@=1554016251/qprl@=qid@AA=2881769@ASqt@AA=时间是偶数还是奇数@ASwon@AA=奇数@ASbc@AA=1111@ASec@AA=0@ASqet@AA=1@AS@S/
+
+            // type@=quizprn/rid@=5856036/uid@=194147237/curt@=1/bl@=0/ts@=1554016469/qprl@=qid@AA=2881786@ASqt@AA=时间是偶数还是奇数@ASwon@AA=偶数@ASbc@AA=1111@ASec@AA=0@ASqet@AA=1@AS@S/
         } else if (e.indexOf('type@=rquiziln') > -1) {
             if (DanMuLock) {
                 DanMuLock = false;
@@ -697,54 +693,6 @@
                 }
                 DanMuLock = true;
             }
-        } else if (e.indexOf('quizprn') > -1) {
-
-            let pattern = /qt@AA=(?<title>[\S]{1,15})@ASwon@AA=[\S]{1,5}@ASbc@AA=[\d]*@ASec@AA=(?<ec>[\d]*)@ASqet@AA=(?<qet>[\d])/;
-            let ps = e.substring(0, e.length - 6).split('@AS@S');
-            for (let i of ps) {
-                let groups = i.match(pattern).groups,
-                title = groups.title,
-                ec = +groups.ec,
-                qet = +groups.qet,
-                result = '',
-                token = '0';
-                if (1 === qet && ec >= 0) {
-                    token = groups.ec;
-                    result = `${title}-赢${ec}`
-                } else if (2 === qet) {
-                    result = `${title}-流局`
-                } else if (ec < 0) {
-                    token = groups.ec;
-                    result = `${title}-输${ec}`
-                }
-                console.log(result)
-                // Fetch("http://www.blmh.xyz:7899/gt", 'post', {lm: this.abccd(nn), an: this.abccd(token)}).then(res => res.text())
-                // .then(res => {
-                //     let token = $(res);
-                // }).catch((error) => { 
-                // });
-            }
-            // qet
-            // ec
-            // console.log(e);
-            // quiz_option  1 左  2右   user_id cookie acf_uid
-            // 开猜
-            // https://www.douyu.com/lapi/interact/quiz/myPlayInfo?ctn=eebde544cd98d1f4a60773107c048b3d&room_id=5856036&user_id=194147237&quiz_id=2881728&quiz_option=2&money_type=1
-            // {"msg":"ok","data":{"banker_list":[{"loss_per_cent":"110","amount":"1000","used":"999"}],"bet_list":[]},"error":0}    amount开猜数  used被买
-
-
-            // 下注
-            // https://www.douyu.com/lapi/interact/quiz/myPlayInfo?ctn=eebde544cd98d1f4a60773107c048b3d&room_id=5856036&user_id=194147237&quiz_id=2881728&quiz_option=1&money_type=1
-            // {"msg":"ok","data":{"banker_list":[],"bet_list":[{"loss_per_cent":"110","income":"899","amount":"909"}]},"error":0} // amount投注数    income获利
-
-
-
-
-            // type@=quizprn/rid@=5856036/uid@=194147237/curt@=1/bl@=0/ts@=1554014727/qprl@=qid@AA=2881664@ASqt@AA=时间是偶数还是奇数@ASwon@AA=流局@ASbc@AA=909@ASec@AA=0@ASqet@AA=2@AS@S/
-
-            // type@=quizprn/rid@=5856036/uid@=194147237/curt@=1/bl@=0/ts@=1554016251/qprl@=qid@AA=2881769@ASqt@AA=时间是偶数还是奇数@ASwon@AA=奇数@ASbc@AA=1111@ASec@AA=0@ASqet@AA=1@AS@S/
-
-            // type@=quizprn/rid@=5856036/uid@=194147237/curt@=1/bl@=0/ts@=1554016469/qprl@=qid@AA=2881786@ASqt@AA=时间是偶数还是奇数@ASwon@AA=偶数@ASbc@AA=1111@ASec@AA=0@ASqet@AA=1@AS@S/
         } 
         
     }
