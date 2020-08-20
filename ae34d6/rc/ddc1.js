@@ -89,17 +89,12 @@ $(document).ready(function () {
     let db = require('electron').remote.getGlobal('sharedObject').db;
     
     function mjRecordsFindAll(fuc) {
-        db.mjRecords.loadDatabase(function (err) {
-            db.mjRecords.find({}, fuc);
-        });
-    //   return db.mjRecords.find({}, fuc);
+      return db.mjRecords.find({}, fuc);
     }
   
     function mjRecordsFindOne(condition, fuc) {
-        db.mjRecords.loadDatabase(function (err) {    // 回调函数(可选)
-            db.mjRecords.findOne(condition, fuc);
-        });
-    //   return db.mjRecords.findOne(condition, fuc);
+      db.mjRecords.loadDatabase();
+      return db.mjRecords.findOne(condition, fuc);
     }
       window.setInterval(function(){
         db.mjRecords.loadDatabase();
@@ -175,60 +170,95 @@ $(document).ready(function () {
   
      
     //   let sortResultDataFirst = [];
-    let allData = [],
-    allLeft = '左';
-    for (let i = 0, len = indexInit.length; i < len; i++) {
+
+      console.log(`----------${indexInit.length}`)
+      for (let i = 0, len = indexInit.length; i < len; i++) {
         let titleInfo = indexInit[i],
-        title = titleInfo.title;
-        // allLeft = titleInfo.leftItem;
+        title = titleInfo.title,
+        leftItem = titleInfo.leftItem;
         roomAnchor = titleInfo.roomAnchor;
-
-        if ((title.indexOf('赖子') > -1 || title.indexOf('癞子') > -1)) {
-            model = 1;
-            break;
+        
+        if ((title.indexOf('赖子') > -1 || title.indexOf('癞子') > -1) && (title.indexOf('1') > -1 || title.indexOf('一') > -1)) {
+          model = 1;
         }
-    
-          if (title.indexOf('队') > -1 || title.indexOf('对') > -1 || title.indexOf('刻') > -1) {
-            model = 2;
-          }
-    
-          if (title.indexOf('方位') > -1 || title.indexOf('座') > -1 || title.indexOf('坐') > -1) {
-            model = 3;
-          }
   
-          if (title.indexOf('风赖') > -1 || title.indexOf('风癞') > -1) {
-            model = 4;
-          }
-    
-          if (title.indexOf('三风') > -1 || title.indexOf('三张风') > -1) {
-            model = 5;
-          }
-    
-    }
+        if (title.indexOf('队') > -1 || title.indexOf('对') > -1 || title.indexOf('刻') > -1) {
+          model = 2;
+        }
+  
+        if (title.indexOf('方位') > -1 || title.indexOf('座') > -1 || title.indexOf('坐') > -1) {
+          model = 3;
+        }
 
-    let dataCacheNwItem = dataCacheNw.get(roomId);
-    if (1 === model) {
-        allData = dataCacheNwItem.get("开局能不能赖子");
-    }
-    let resultData = {};
-    let resultStarData = {};
-    console.log(allLeft);
-    if (1 === model || 2 === model || 3 == model || 4 == model || 5 == model) {
+        if (title.indexOf('风赖') > -1 || title.indexOf('风癞') > -1) {
+          model = 4;
+        }
+  
+        if (title.indexOf('三风') > -1 || title.indexOf('三张风') > -1) {
+          model = 5;
+        }
+  
+        let dataCacheNwItem = dataCacheNw.get(roomId);
+
+        // if (dataCacheNwItem.get(title)) {
+        //     sortResultDataFirst.push(...dataCacheNwItem.get(title));
+        // }
+
+        
+        if (title.indexOf('1') > -1 || title.indexOf('一') > -1) {
+          firstData = dataCacheNwItem.get(title);
+          firstLeft = leftItem;
+        } else if (title.indexOf('2') > -1 || title.indexOf('二') > -1) {
+          secondData = dataCacheNwItem.get(title);
+          secondLeft = leftItem;
+        } else if (title.indexOf('3') > -1 || title.indexOf('三') > -1) {
+          thirdData = dataCacheNwItem.get(title);
+          thirdLeft = leftItem;
+        } else {
+          commonData[title] = dataCacheNwItem.get(title);
+          commonLeft[title] = leftItem;
+        }
+        
+      }
+
+    //   sortResultDataFirst = sortResultDataFirst.sort(function(a, b){
+    //     a = a.split('-')[0];
+    //     b = b.split('-')[0];
+    //     if (a < b) {
+    //         return -1;
+    //     } else if (a > b) {
+    //         return 1;
+    //     } else {
+    //         return 0;
+    //     }
+    //   });
+  
+      let resultData = {};
+      let resultStarData = {};
+      if (1 === model || 2 === model || 3 == model || 4 == model || 5 == model) {
         let resultItemData = [];
         let resultItemStarData = [];
-
-        if (allData) {
-            allData.sort(function(a, b) {
-                let aQid = +a.split('-')[0];
-                let bQid = +b.split('-')[0];
-                return aQid - bQid;
-            });
-            for (let i = 0, len = allData.length; i < len; i++) {
-                if (allData[i]) {
-                    resultItemData.push(allData[i].split('-')[1] == allLeft ? 1 : allData[i].split('-')[1] == 'flow' ? 0 : 2);
-                    resultItemStarData.push(allData[i].split('-')[1] == allLeft ? "★" : allData[i].split('-')[1] == 'flow' ? "○" : "☆");
-                }
-            }
+        // for (let i = 0, len = sortResultDataFirst.length; i < len; i++) {
+        //     resultItemData.push(sortResultDataFirst[i].split('-')[1] == firstLeft ? 1 : sortResultDataFirst[i].split('-')[1] == 'flow' ? 0 : 2);
+        //     resultItemStarData.push(sortResultDataFirst[i].split('-')[1] == firstLeft ? "★" : sortResultDataFirst[i].split('-')[1] == 'flow' ? "○" : "☆");
+        // }
+        
+        
+        for (let i = 0, len = firstData.length; i < len; i++) {
+          if (firstData && firstData[i]) {
+            resultItemData.push(firstData[i].split('-')[1] == firstLeft ? 1 : firstData[i].split('-')[1] == 'flow' ? 0 : 2);
+            resultItemStarData.push(firstData[i].split('-')[1] == firstLeft ? "★" : firstData[i].split('-')[1] == 'flow' ? "○" : "☆");
+          }
+  
+          if (secondData && secondData[i]) {
+            resultItemData.push(secondData[i].split('-')[1] == secondLeft ? 1 : secondData[i].split('-')[1] == 'flow' ? 0 : 2);
+            resultItemStarData.push(secondData[i].split('-')[1] == secondLeft ? "★" : secondData[i].split('-')[1] == 'flow' ? "○" : "☆");
+          }
+  
+          if (thirdData && thirdData[i]) {
+            resultItemData.push(thirdData[i].split('-')[1] == thirdLeft ? 1 : thirdData[i].split('-')[1] == 'flow' ? 0 : 2);
+            resultItemStarData.push(thirdData[i].split('-')[1] == thirdLeft ? "★" : thirdData[i].split('-')[1] == 'flow' ? "○" : "☆");
+          }
         }
   
         if(1 === model) {
@@ -249,7 +279,7 @@ $(document).ready(function () {
         } else {
   
         }
-    } else if (0 === model) {
+      } else if (0 === model) {
         for (let commonItem in commonData) {
           let resultItemData = [];
           let resultItemStarData = [];
@@ -265,123 +295,9 @@ $(document).ready(function () {
           resultData[commonItem] = resultItemData;
           resultStarData[commonItem] = resultItemStarData;
         }
-    } else {  
-
-    }
-
-      console.log(`----------${indexInit.length}`)
-    //   for (let i = 0, len = indexInit.length; i < len; i++) {
-    //     let titleInfo = indexInit[i],
-    //     title = titleInfo.title,
-    //     leftItem = titleInfo.leftItem;
-    //     roomAnchor = titleInfo.roomAnchor;
-        
-    //     if ((title.indexOf('赖子') > -1 || title.indexOf('癞子') > -1) && (title.indexOf('1') > -1 || title.indexOf('一') > -1)) {
-    //       model = 1;
-    //     }
+      } else {
   
-    //     if (title.indexOf('队') > -1 || title.indexOf('对') > -1 || title.indexOf('刻') > -1) {
-    //       model = 2;
-    //     }
-  
-    //     if (title.indexOf('方位') > -1 || title.indexOf('座') > -1 || title.indexOf('坐') > -1) {
-    //       model = 3;
-    //     }
-
-    //     if (title.indexOf('风赖') > -1 || title.indexOf('风癞') > -1) {
-    //       model = 4;
-    //     }
-  
-    //     if (title.indexOf('三风') > -1 || title.indexOf('三张风') > -1) {
-    //       model = 5;
-    //     }
-  
-    //     let dataCacheNwItem = dataCacheNw.get(roomId);
-
-    //     // if (dataCacheNwItem.get(title)) {
-    //     //     sortResultDataFirst.push(...dataCacheNwItem.get(title));
-    //     // }
-
-        
-    //     if (title.indexOf('1') > -1 || title.indexOf('一') > -1) {
-    //       firstData = dataCacheNwItem.get(title);
-    //       firstLeft = leftItem;
-    //     } else if (title.indexOf('2') > -1 || title.indexOf('二') > -1) {
-    //       secondData = dataCacheNwItem.get(title);
-    //       secondLeft = leftItem;
-    //     } else if (title.indexOf('3') > -1 || title.indexOf('三') > -1) {
-    //       thirdData = dataCacheNwItem.get(title);
-    //       thirdLeft = leftItem;
-    //     } else {
-    //       commonData[title] = dataCacheNwItem.get(title);
-    //       commonLeft[title] = leftItem;
-    //     }
-        
-    //   }
-  
-    //   if (1 === model || 2 === model || 3 == model || 4 == model || 5 == model) {
-    //     let resultItemData = [];
-    //     let resultItemStarData = [];
-    //     // for (let i = 0, len = sortResultDataFirst.length; i < len; i++) {
-    //     //     resultItemData.push(sortResultDataFirst[i].split('-')[1] == firstLeft ? 1 : sortResultDataFirst[i].split('-')[1] == 'flow' ? 0 : 2);
-    //     //     resultItemStarData.push(sortResultDataFirst[i].split('-')[1] == firstLeft ? "★" : sortResultDataFirst[i].split('-')[1] == 'flow' ? "○" : "☆");
-    //     // }
-        
-        
-    //     for (let i = 0, len = firstData.length; i < len; i++) {
-    //       if (firstData && firstData[i]) {
-    //         resultItemData.push(firstData[i].split('-')[1] == firstLeft ? 1 : firstData[i].split('-')[1] == 'flow' ? 0 : 2);
-    //         resultItemStarData.push(firstData[i].split('-')[1] == firstLeft ? "★" : firstData[i].split('-')[1] == 'flow' ? "○" : "☆");
-    //       }
-  
-    //       if (secondData && secondData[i]) {
-    //         resultItemData.push(secondData[i].split('-')[1] == secondLeft ? 1 : secondData[i].split('-')[1] == 'flow' ? 0 : 2);
-    //         resultItemStarData.push(secondData[i].split('-')[1] == secondLeft ? "★" : secondData[i].split('-')[1] == 'flow' ? "○" : "☆");
-    //       }
-  
-    //       if (thirdData && thirdData[i]) {
-    //         resultItemData.push(thirdData[i].split('-')[1] == thirdLeft ? 1 : thirdData[i].split('-')[1] == 'flow' ? 0 : 2);
-    //         resultItemStarData.push(thirdData[i].split('-')[1] == thirdLeft ? "★" : thirdData[i].split('-')[1] == 'flow' ? "○" : "☆");
-    //       }
-    //     }
-  
-    //     if(1 === model) {
-    //       resultData['开局能不能赖子'] = resultItemData;
-    //       resultStarData['开局能不能赖子'] = resultItemStarData;
-    //     } else if (2 === model) {
-    //       resultData['开局有没有三对'] = resultItemData;
-    //       resultStarData['开局有没有三对'] = resultItemStarData;
-    //     }  else if (3 === model) {
-    //       resultData['开局方位'] = resultItemData;
-    //       resultStarData['开局方位'] = resultItemStarData;
-    //     }  else if (4 === model) {
-    //       resultData['开局有没有风赖'] = resultItemData;
-    //       resultStarData['开局有没有风赖'] = resultItemStarData;
-    //     } else if (5 === model) {
-    //       resultData['开局有没有三风'] = resultItemData;
-    //       resultStarData['开局有没有三风'] = resultItemStarData;
-    //     } else {
-  
-    //     }
-    //   } else if (0 === model) {
-    //     for (let commonItem in commonData) {
-    //       let resultItemData = [];
-    //       let resultItemStarData = [];
-    //       let commonResult = commonData[commonItem],
-    //       leftItem = commonLeft[commonItem];
-    //       if (commonResult) {
-    //         for (let i = 0, len = commonResult.length; i < len; i++) {
-    //           resultItemData.push(commonResult[i].split('-')[1] == leftItem ? 1 : commonResult[i].split('-')[1] == 'flow' ? 0 : 2);
-    //           resultItemStarData.push(commonResult[i].split('-')[1] == leftItem ? "★" : commonResult[i].split('-')[1] == 'flow' ? "○" : "☆");
-    //         }
-    //       }
-          
-    //       resultData[commonItem] = resultItemData;
-    //       resultStarData[commonItem] = resultItemStarData;
-    //     }
-    //   } else {
-  
-    //   }
+      }
 
       let titleClient = "",
       contentNumClient = "",
@@ -545,22 +461,6 @@ $(document).ready(function () {
       // 猪头结束
 
       
-      // 北极星开始
-      let beiJiXingStr = `群内设置免打扰, 祝各位游戏愉快<br><记录时间24小时><br><br>${roomAnchor}<br>`,
-      beiJiXingEndStr = '<br>买卖海鲜私聊群主  百万优惠<br>☞本记录依据主播结算结果☜';
-      beiJiXingStr += midStr + beiJiXingEndStr;
-      let newBeiJiXingData = {
-        "action": 1,
-        "roomInfo": `${roomAnchor}：${roomId}`,
-        "title": titleClient,
-        "contentNum": contentNumClient,
-        "contentStar": contentStarClient
-      }
-      console.log(newBeiJiXingData);
-      console.log("发送至新猪头手机");
-
-      await sendToBeiJiXing(newBeiJiXingData);
-      // 北极星结束
 
       sysSend = false;
     });
@@ -571,7 +471,7 @@ $(document).ready(function () {
       let roomAnchor = arg.roomAnchor,
       roomId = arg.roomId;
   
-      mjRecordsFindOne({roomId: String(roomId)}, function(err, docs) {
+      mjRecordsFindOne(roomId, function(err, docs) {
         if (docs) {
           let roomId = +docs.roomId;
           for (let resultItem in docs) {
@@ -649,8 +549,6 @@ $(document).ready(function () {
         await sendToSelf(newAbcData); // 发送到自己
 
         await sendToZhuTou(newAbcData); // 发送到猪头
-
-        await sendToBeiJiXing(newAbcData); // 发送到北极星
 
         console.log("发送至微信");
         ipcRenderer.send('to-wx-msg', {
@@ -821,23 +719,6 @@ $(document).ready(function () {
             console.log('猪头发送客户端成功');
           } else {
             console.log('猪头发送客户端失败');
-          }
-        });
-    
-        // await sendDataWX(abcStr);
-      }
-
-      
-      async function sendToBeiJiXing(beiJiXingStr) {
-        const abcWebToMobileUrl = 'http://127.0.0.1:10236/beijixing/stm_ws';
-
-        Fetch(abcWebToMobileUrl, 'post', beiJiXingStr).then(res => res.text())
-        .then(res => {
-          res=JSON.parse(res);
-          if (res.code == '0000') {
-            console.log('北极星发送客户端成功');
-          } else {
-            console.log('北极星发送客户端失败');
           }
         });
     
